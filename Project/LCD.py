@@ -1,8 +1,5 @@
 import RPi.GPIO as GPIO
 import time
-import socket
-import fcntl
-import struct
 from subprocess import *
 RS = 26
 E = 19
@@ -168,33 +165,8 @@ class LCD:
             self.__setGPIODataBits(ascii)
             self.__eLaagData()
 
-# def get_interface_ipaddress(network):
-#     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-#     return socket.inet_ntoa(fcntl.ioctl(
-#         s.fileno(),
-#         0x8915,
-#         struct.pack('256s', network[:15])
-#     )[20:24])
-
-cmd = "ip addr show dev eth0 | grep inet | awk '{print $2}' | cut -d/ -f1"
 
 
-def run_cmd(cmd):
-    p = Popen(cmd, shell=True, stdout=PIPE)
-    output = p.communicate()[0]
-    return output
-
-ipadres = run_cmd(cmd)
-ipadres = ipadres[:13]
-print(ipadres)
-
-lcd = LCD(26,19,12,16,20,21)
-lcd.main()
-lcd.init()
-lcd.message('%s' % ( ipadres ))
-for i in range(24):
-    lcd.move_cursor()
-lcd.message('opdracht.py')
 try:
     while True:
         pass
